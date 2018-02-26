@@ -1,11 +1,9 @@
-// Change the name of this file and complete the API Keys and details you need
-
 var _ = require('lodash');
 var path = require('path')
 
 module.exports = {
   bot: {
-    key: '<YOURBOTAPIKEY>',
+    key: '<BOTKEY>',
     botanio: {
       key: '<BOTANIO_KEY>'
     },
@@ -26,6 +24,11 @@ module.exports = {
     locale: 'es',
     timezone: '	America/Costa_Rica'
   },
+  commands: [
+    "/pista: Activar código de tiquete para obtener una pista",
+    "/ahora: ¿Qué actividades están sucediendo ahora?",
+    "/hoy: ¿Qué actividades van a suceder hoy?"
+  ]
 };
 
 // try to require local config
