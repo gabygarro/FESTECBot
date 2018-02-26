@@ -1,6 +1,9 @@
 // Imports
 var bb = require('bot-brother');
 var config = require('./config');
+var pista = require('./commands/pista');
+var hoy = require('./commands/hoy');
+var ahora = require('./commands/ahora');
 
 // Bot definition
 var bot = bb({
@@ -9,27 +12,46 @@ var bot = bb({
   polling: { interval: 0, timeout: 1 }
 });
 
-// Let's create command '/start'.
+// Comando por defecto
+bot.command(/^(?!start$|help$|pista$|hoy$|ahora$)/).use('before', function (ctx) {
+  return ctx.sendMessage('No entiendo ese comando. Trata con mis comandos en /help');
+});
+
+// Start
 bot.command('start')
 .invoke(function (ctx) {
   // Setting data, data is used in text message templates.
   ctx.data.user = ctx.meta.user;
   // Invoke callback must return promise.
-  return ctx.sendMessage('Hello <%=user.first_name%>. How are you?');
-})
-.answer(function (ctx) {
-  ctx.data.answer = ctx.answer;
-  // Returns promise.
-  return ctx.sendMessage('OK. I understood. You feel <%=answer%>');
+  ctx.sendMessage('Hola <%=user.first_name%>. Estos son mis comandos:');
+  return ctx.sendMessage(getCommands(), {parse_mode: 'Markdown'});
 });
 
-// Creating command '/upload_photo'.
-bot.command('upload_photo')
+// Help
+bot.command('help')
 .invoke(function (ctx) {
-  return ctx.sendMessage('Drop me a photo, please');
-})
-.answer(function (ctx) {
-  // ctx.message is an object that represents Message.
-  // See https://core.telegram.org/bots/api#message 
-  return ctx.sendPhoto(ctx.message.photo[0].file_id, {caption: 'I got your photo!'});
+  return ctx.sendMessage(getCommands(), {parse_mode: 'Markdown'});
 });
+
+// Pista
+bot.command('pista')
+.invoke(function (ctx) {
+  return pista.exec(ctx);
+});
+
+// Hoy
+bot.command('hoy')
+.invoke(function (ctx) {
+  return hoy.exec(ctx);
+});
+
+// Ahora
+bot.command('ahora')
+.invoke(function (ctx) {
+  return ahora.exec(ctx);
+});
+
+// Misc functions
+function getCommands() {
+  return config.commands.join('\n').toString();
+}
