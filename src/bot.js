@@ -12,8 +12,14 @@ var bot = bb({
   polling: { interval: 0, timeout: 1 }
 });
 
+bot.command(/.*/).invoke(function (ctx) {
+  return console.log(ctx.message.date + ': ' + 
+    JSON.stringify(ctx.message.chat) + ', ' + 
+    JSON.stringify(ctx.command));
+});
+
 // Comando por defecto
-bot.command(/^(?!start$|help$|pista$|hoy$|ahora$)/).use('before', function (ctx) {
+bot.command(/^(?!start$|help$|pista$|hoy$|ahora$)/).invoke(function (ctx) {
   return ctx.sendMessage('No entiendo ese comando. Trata con mis comandos en /help');
 });
 
@@ -23,8 +29,8 @@ bot.command('start')
   // Setting data, data is used in text message templates.
   ctx.data.user = ctx.meta.user;
   // Invoke callback must return promise.
-  ctx.sendMessage('Hola <%=user.first_name%>. Estos son mis comandos:');
-  return ctx.sendMessage(getCommands(), {parse_mode: 'Markdown'});
+  return ctx.sendMessage('Hola <%=user.first_name%>. Estos son mis comandos:\n'+ getCommands(), 
+    {parse_mode: 'Markdown'});
 });
 
 // Help
