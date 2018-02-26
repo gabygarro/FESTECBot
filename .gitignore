@@ -60,6 +60,8 @@ typings/
 #VSCode
 .vscode/
 
-#Configs and logs/src/node_modules/config/local.*
+#Configs and logs
+/src/node_modules/config/local.*
+/src/config/index.js
 /logs/*
 /*.log

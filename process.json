@@ -3,8 +3,8 @@
     {
       "name": "FESTECBot",
       "script": "src/index.js",
-      "error_file": "FESTECBot.pm.error.log",
-      "out_file": "FESTECBot.pm.log",
+      "error_file": "logs/FESTECBot.pm.error.log",
+      "out_file": "logs/FESTECBot.pm.log",
       "max_restart_memory": "8G",
       "log_date_format": "YYYY-MM-DD HH:mm Z",
       "node_args": ["--harmony"],
