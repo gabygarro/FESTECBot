@@ -62,7 +62,7 @@ typings/
 
 #Configs and logs
 /src/node_modules/config/local.*
-/src/config/FESTECBot*.json
+/src/config/google-generated-creds.json
 /src/config/index.js
 /logs/*
 /*.log
